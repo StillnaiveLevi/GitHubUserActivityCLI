@@ -20,14 +20,13 @@ public class GithubApiDaoImpl implements GithubApiDao {
          this.webClient = webClientBuilder
                      .baseUrl("https://api.github.com")
                      .defaultHeader("User-Agent", "GitHub-User-Activity-CLI")
-                     .defaultHeader("Accept", "application/vnd.github.v3+json")
+                     .defaultHeader("Accept", "application/vnd.github+json")
                      .build();
     }
     @Override
     public List<GithubEvent> fetchUserEvents(String username) {
         return webClient.get()
         .uri("/users/{username}/events", username)
-        //.timeout(Duration.ofSeconds(10))
         .retrieve()
         .onStatus(
                 HttpStatusCode::isError,
@@ -43,13 +42,8 @@ public class GithubApiDaoImpl implements GithubApiDao {
         )
 
         .bodyToFlux(GithubEvent.class)
+        .timeout(Duration.ofSeconds(10))
         .collectList()
-
-        .onErrorResume(e -> {
-            System.err.println("Error fetching events: " + e.getMessage());
-            return Mono.just(List.of());
-        })
-
         .block();
     }
    
