@@ -40,48 +40,48 @@ public class GithubActivityImpl implements GithubActivityService {
 
     private String formatEvent(GithubEvent event) {
 
-    String repoName = event.getRepoName() != null && !event.getRepoName().isEmpty() ? event.getRepoName() : "unknown repository";
+        String repoName = event.getRepoName() != null && !event.getRepoName().isEmpty() ? event.getRepoName() : "unknown repository";
 
-    return switch (event.getType()) {
+        return switch (event.getType()) {
 
-        case "PushEvent" ->
-            "Pushed commits to " + repoName;
+            case "PushEvent" ->
+                "Pushed commits to " + repoName;
 
-        case "WatchEvent" ->
-            "Starred " + repoName;
+            case "WatchEvent" ->
+                "Starred " + repoName;
 
-        case "IssuesEvent" ->
-            "Opened an issue in " + repoName;
+            case "IssuesEvent" ->
+                "Opened an issue in " + repoName;
 
-        case "IssueCommentEvent" ->
-            "Commented on an issue in " + repoName;
+            case "IssueCommentEvent" ->
+                "Commented on an issue in " + repoName;
 
-        case "PullRequestEvent" ->
-            "Opened a pull request in " + repoName;
+            case "PullRequestEvent" ->
+                "Opened a pull request in " + repoName;
 
-        case "PullRequestReviewEvent" ->
-            "Reviewed a pull request in " + repoName;
+            case "PullRequestReviewEvent" ->
+                "Reviewed a pull request in " + repoName;
 
-        case "ForkEvent" ->
-            "Forked " + repoName;
+            case "ForkEvent" ->
+                "Forked " + repoName;
 
-        case "CreateEvent" ->
-            "Created something in " + repoName;
+            case "CreateEvent" ->
+                "Created something in " + repoName;
 
-        case "DeleteEvent" ->
-            "Deleted something in " + repoName;
+            case "DeleteEvent" ->
+                "Deleted something in " + repoName;
 
-        case "ReleaseEvent" ->
-            "Published a release in " + repoName;
+            case "ReleaseEvent" ->
+                "Published a release in " + repoName;
 
-        case "PublicEvent" ->
-            "Made " + repoName + " public";
+            case "PublicEvent" ->
+                "Made " + repoName + " public";
 
-        case "MemberEvent" ->
-            "Added a collaborator to " + repoName;
+            case "MemberEvent" ->
+                "Added a collaborator to " + repoName;
 
-        default ->
-            event.getType() + " in " + repoName;
-    };
+            default ->
+                event.getType() + " in " + repoName;
+        };
 }
 }
