@@ -1,4 +1,4 @@
-package com.githubactivity.githubactivitycli;
+package com.githubactivity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

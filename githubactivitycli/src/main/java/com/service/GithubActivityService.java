@@ -1,5 +1,9 @@
 package com.service;
 
-public class GithubActivityService {
+import java.util.List;
 
+import com.model.GithubEvent;
+
+public interface GithubActivityService {
+    List<GithubEvent> fetchUserEvents(String username);
 }

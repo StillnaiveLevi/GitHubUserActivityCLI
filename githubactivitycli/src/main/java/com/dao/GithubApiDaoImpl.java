@@ -4,18 +4,23 @@ package com.dao;
 import java.time.Duration;
 import java.util.List;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.exception.GithubException;
 import com.model.GithubEvent;
 
 import reactor.core.publisher.Mono;
 
 @Repository
 public class GithubApiDaoImpl implements GithubApiDao {
-
+    
     private final WebClient webClient;
+
+    
     public GithubApiDaoImpl(WebClient.Builder webClientBuilder) {
          this.webClient = webClientBuilder
                      .baseUrl("https://api.github.com")
@@ -28,18 +33,23 @@ public class GithubApiDaoImpl implements GithubApiDao {
         return webClient.get()
         .uri("/users/{username}/events", username)
         .retrieve()
-        .onStatus(
-                HttpStatusCode::isError,
+        .onStatus(HttpStatus.NOT_FOUND::equals, 
+                response -> Mono.error(
+                    new GithubException("User '" + username + "' not found.")
+                ))
+                
+        .onStatus(HttpStatus.FORBIDDEN::equals, 
+                response -> Mono.error(
+                    new GithubException("Rate limit exceeded. Please try again later.")
+                ))
+            
+            // Catch other errors
+        .onStatus(HttpStatusCode::isError, 
                 response -> response.bodyToMono(String.class)
-                        .flatMap(body -> {
-                            System.err.println("GitHub API error: " + response.statusCode());
-                            System.err.println("Body: " + body);
-
-                            return Mono.error(new RuntimeException(
-                                    "Failed to fetch GitHub events: " + body
-                            ));
-                        })
-        )
+                    .flatMap(body -> Mono.error(
+                        new GithubException("Failed to fetch activity: " + body)
+                    ))
+            )
 
         .bodyToFlux(GithubEvent.class)
         .timeout(Duration.ofSeconds(10))
