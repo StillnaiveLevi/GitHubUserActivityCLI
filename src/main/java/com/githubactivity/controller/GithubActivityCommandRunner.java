@@ -1,4 +1,4 @@
-﻿package com.githubactivity.controller;
+package com.githubactivity.controller;
 
 import org.springframework.stereotype.Component;
 

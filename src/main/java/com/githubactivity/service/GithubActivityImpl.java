@@ -1,4 +1,4 @@
-﻿package com.githubactivity.service;
+package com.githubactivity.service;
 
 import java.util.List;
 

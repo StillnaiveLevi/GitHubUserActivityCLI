@@ -24,7 +24,7 @@ The app calls the GitHub Events API, reads the user's public events, and prints 
 Open a terminal in the project folder:
 
 ```powershell
-cd "C:\Users\HP\OneDrive\Desktop\GitHubUserActivityCLI\githubactivitycli"
+cd "C:\Users\HP\OneDrive\Desktop\GitHubUserActivityCLI"
 ```
 
 Run the app with a GitHub username:
