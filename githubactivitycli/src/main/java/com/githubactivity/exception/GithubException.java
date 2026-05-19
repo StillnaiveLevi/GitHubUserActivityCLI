@@ -1,4 +1,4 @@
-package com.exception;
+package com.githubactivity.exception;
 
 public class GithubException extends RuntimeException {
     private String message;

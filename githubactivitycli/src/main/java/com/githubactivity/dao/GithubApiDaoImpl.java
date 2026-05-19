@@ -1,4 +1,4 @@
-package com.dao;
+package com.githubactivity.dao;
 
 
 import java.time.Duration;
@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.exception.GithubException;
-import com.model.GithubEvent;
+import com.githubactivity.exception.GithubException;
+import com.githubactivity.model.GithubEvent;
 
 import reactor.core.publisher.Mono;
 

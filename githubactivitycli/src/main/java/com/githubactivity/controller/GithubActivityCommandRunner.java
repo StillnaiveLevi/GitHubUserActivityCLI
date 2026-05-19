@@ -1,8 +1,11 @@
-package com.controller;
+﻿package com.githubactivity.controller;
 
-import com.service.GithubActivityService;
+import org.springframework.stereotype.Component;
 
-public class GithubActivityCommandRunner implements CommandLineRunner {
+import com.githubactivity.service.GithubActivityService;
+
+@Component
+public class GithubActivityCommandRunner implements org.springframework.boot.CommandLineRunner {
 
     private final GithubActivityService githubActivityService;
 
@@ -18,12 +21,11 @@ public class GithubActivityCommandRunner implements CommandLineRunner {
             return;
         }
 
-        String username = args[0];
+        String username = args[0].trim();
         if (username.isEmpty()) {
             System.out.println("Username cannot be empty. Please provide a valid GitHub username.");
             return;
         }
         githubActivityService.fetchUserEvents(username);
     }
-
 }
